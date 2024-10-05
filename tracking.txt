@@ -1,0 +1,24 @@
+- [x] relations entre les entités
+    - heritage d'entité pour les tables movie et serie
+        - Table entité: Media
+            - entité enfants: movie et série
+- [x] liaison à la base de données
+- [x] migrations
+- [] fixtures
+
+
+
+relations à faire:
+
+- [X] playlists <-> users : ManyToOne
+- [X] playlist_subscriptions <-> playlists: ManyToOne
+- [X] playlist_subscription <-> users: ManyToOne
+- [X]  playlist_media <-> playlist : ManyToOne
+- [X]  playlist_media <-> media : ManyToOne
+- [X] users <-> subscription : ManyToOne
+- [X] subscription_history <-> users : ManyToOne
+- [X] subscription_history <-> subscription : ManyToOne
+- [X] watch_history <-> users : ManyToOne
+- [X] watch_history <-> media : ManyToOne
+- [X] seasons <-> serie : ManyToOne
+- [X] episodes <-> seasons : ManyToOne
