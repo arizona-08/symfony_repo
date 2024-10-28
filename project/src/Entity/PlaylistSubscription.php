@@ -14,14 +14,15 @@ class PlaylistSubscription
     private ?int $id = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $subscribed_at = null;
-
-    #[ORM\ManyToOne(inversedBy: 'playlistSubscriptions')]
-    private ?User $author = null;
+    private ?\DateTimeImmutable $subscribedAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'playlistSubscriptions')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Subscription $subscription = null;
+    private ?User $subscriber = null;
+
+    #[ORM\ManyToOne(inversedBy: 'playlistSubscriptions')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Playlist $playlist = null;
 
     public function getId(): ?int
     {
@@ -30,36 +31,36 @@ class PlaylistSubscription
 
     public function getSubscribedAt(): ?\DateTimeImmutable
     {
-        return $this->subscribed_at;
+        return $this->subscribedAt;
     }
 
-    public function setSubscribedAt(\DateTimeImmutable $subscribed_at): static
+    public function setSubscribedAt(\DateTimeImmutable $subscribedAt): static
     {
-        $this->subscribed_at = $subscribed_at;
+        $this->subscribedAt = $subscribedAt;
 
         return $this;
     }
 
-    public function getAuthor(): ?User
+    public function getSubscriber(): ?User
     {
-        return $this->author;
+        return $this->subscriber;
     }
 
-    public function setAuthor(?User $author): static
+    public function setSubscriber(?User $subscriber): static
     {
-        $this->author = $author;
+        $this->subscriber = $subscriber;
 
         return $this;
     }
 
-    public function getSubscription(): ?Subscription
+    public function getPlaylist(): ?Playlist
     {
-        return $this->subscription;
+        return $this->playlist;
     }
 
-    public function setSubscription(?Subscription $subscription): static
+    public function setPlaylist(?Playlist $playlist): static
     {
-        $this->subscription = $subscription;
+        $this->playlist = $playlist;
 
         return $this;
     }

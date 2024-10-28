@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use App\Repository\SerieRepository;
@@ -11,15 +13,15 @@ use Doctrine\ORM\Mapping\Entity;
 #[Entity(repositoryClass: SerieRepository::class)]
 class Serie extends Media
 {
-
     /**
      * @var Collection<int, Season>
      */
-    #[ORM\OneToMany(targetEntity: Season::class, mappedBy: 'serie', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Season::class, mappedBy: 'serie')]
     private Collection $seasons;
 
     public function __construct()
     {
+        parent::__construct();
         $this->seasons = new ArrayCollection();
     }
 

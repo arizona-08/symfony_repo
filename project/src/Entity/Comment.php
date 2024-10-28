@@ -23,27 +23,26 @@ class Comment
     #[ORM\Column(enumType: CommentStatusEnum::class)]
     private ?CommentStatusEnum $status = null;
 
-    #[ORM\ManyToOne(inversedBy: 'comments')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $author = null;
-
-    #[ORM\ManyToOne(inversedBy: 'comments')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Media $media = null;
-
-    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'comments')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'childComments')]
     private ?self $parentComment = null;
 
     /**
      * @var Collection<int, self>
      */
-    #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parentComment', orphanRemoval: true)]
-    private Collection $comments;
+    #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parentComment')]
+    private Collection $childComments;
+
+    #[ORM\ManyToOne(inversedBy: 'comments')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $publisher = null;
+
+    #[ORM\ManyToOne(inversedBy: 'comments')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Media $media = null;
 
     public function __construct()
     {
-        $this->comments = new ArrayCollection();
+        $this->childComments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -75,30 +74,6 @@ class Comment
         return $this;
     }
 
-    public function getAuthor(): ?User
-    {
-        return $this->author;
-    }
-
-    public function setAuthor(?User $author): static
-    {
-        $this->author = $author;
-
-        return $this;
-    }
-
-    public function getMedia(): ?Media
-    {
-        return $this->media;
-    }
-
-    public function setMedia(?Media $media): static
-    {
-        $this->media = $media;
-
-        return $this;
-    }
-
     public function getParentComment(): ?self
     {
         return $this->parentComment;
@@ -114,29 +89,53 @@ class Comment
     /**
      * @return Collection<int, self>
      */
-    public function getComments(): Collection
+    public function getChildComments(): Collection
     {
-        return $this->comments;
+        return $this->childComments;
     }
 
-    public function addComment(self $comment): static
+    public function addChildComment(self $childComment): static
     {
-        if (!$this->comments->contains($comment)) {
-            $this->comments->add($comment);
-            $comment->setParentComment($this);
+        if (!$this->childComments->contains($childComment)) {
+            $this->childComments->add($childComment);
+            $childComment->setParentComment($this);
         }
 
         return $this;
     }
 
-    public function removeComment(self $comment): static
+    public function removeChildComment(self $childComment): static
     {
-        if ($this->comments->removeElement($comment)) {
+        if ($this->childComments->removeElement($childComment)) {
             // set the owning side to null (unless already changed)
-            if ($comment->getParentComment() === $this) {
-                $comment->setParentComment(null);
+            if ($childComment->getParentComment() === $this) {
+                $childComment->setParentComment(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPublisher(): ?User
+    {
+        return $this->publisher;
+    }
+
+    public function setPublisher(?User $publisher): static
+    {
+        $this->publisher = $publisher;
+
+        return $this;
+    }
+
+    public function getMedia(): ?Media
+    {
+        return $this->media;
+    }
+
+    public function setMedia(?Media $media): static
+    {
+        $this->media = $media;
 
         return $this;
     }

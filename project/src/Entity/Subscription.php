@@ -15,20 +15,14 @@ class Subscription
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 100)]
+    #[ORM\Column(length: 255)]
     private ?string $name = null;
 
     #[ORM\Column]
-    private ?float $price = null;
+    private ?int $price = null;
 
     #[ORM\Column]
-    private ?int $duration_in_months = null;
-
-    /**
-     * @var Collection<int, PlaylistSubscription>
-     */
-    #[ORM\OneToMany(targetEntity: PlaylistSubscription::class, mappedBy: 'subscription', orphanRemoval: true)]
-    private Collection $playlistSubscriptions;
+    private ?int $duration = null;
 
     /**
      * @var Collection<int, User>
@@ -44,7 +38,6 @@ class Subscription
 
     public function __construct()
     {
-        $this->playlistSubscriptions = new ArrayCollection();
         $this->users = new ArrayCollection();
         $this->subscriptionHistories = new ArrayCollection();
     }
@@ -66,56 +59,26 @@ class Subscription
         return $this;
     }
 
-    public function getPrice(): ?float
+    public function getPrice(): ?int
     {
         return $this->price;
     }
 
-    public function setPrice(float $price): static
+    public function setPrice(int $price): static
     {
         $this->price = $price;
 
         return $this;
     }
 
-    public function getDurationInMonths(): ?int
+    public function getDuration(): ?int
     {
-        return $this->duration_in_months;
+        return $this->duration;
     }
 
-    public function setDurationInMonths(int $duration_in_months): static
+    public function setDuration(int $duration): static
     {
-        $this->duration_in_months = $duration_in_months;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, PlaylistSubscription>
-     */
-    public function getPlaylistSubscriptions(): Collection
-    {
-        return $this->playlistSubscriptions;
-    }
-
-    public function addPlaylistSubscription(PlaylistSubscription $playlistSubscription): static
-    {
-        if (!$this->playlistSubscriptions->contains($playlistSubscription)) {
-            $this->playlistSubscriptions->add($playlistSubscription);
-            $playlistSubscription->setSubscription($this);
-        }
-
-        return $this;
-    }
-
-    public function removePlaylistSubscription(PlaylistSubscription $playlistSubscription): static
-    {
-        if ($this->playlistSubscriptions->removeElement($playlistSubscription)) {
-            // set the owning side to null (unless already changed)
-            if ($playlistSubscription->getSubscription() === $this) {
-                $playlistSubscription->setSubscription(null);
-            }
-        }
+        $this->duration = $duration;
 
         return $this;
     }

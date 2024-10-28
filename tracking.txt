@@ -6,12 +6,10 @@
 - [x] migrations
 - [] fixtures
 
-
-
 relations à faire:
 
 - [X] playlists <-> users : ManyToOne
-- [X] playlist_subscriptions <-> playlists: ManyToOne
+- [x] playlist_subscriptions <-> playlists: ManyToOne
 - [X] playlist_subscription <-> users: ManyToOne
 - [X]  playlist_media <-> playlist : ManyToOne
 - [X]  playlist_media <-> media : ManyToOne
