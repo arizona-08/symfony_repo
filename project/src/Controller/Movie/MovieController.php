@@ -6,6 +6,7 @@ use App\Entity\Category;
 use App\Entity\Media;
 use App\Repository\CategoryRepository;
 use App\Repository\MediaRepository;
+use App\Repository\PlaylistRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -20,8 +21,9 @@ class MovieController extends AbstractController {
     }
 
     #[Route(path: "/lists", name: "lists")]
-    public function lists(): Response {
-        return $this->render("movie/lists.html.twig");
+    public function lists(PlaylistRepository $playlistRepository): Response {
+        $playlists = $playlistRepository->findAll();
+        return $this->render("movie/lists.html.twig", ["playlists" => $playlists]);
     }
 
     #[Route(path: "/detail", name: "detail")]

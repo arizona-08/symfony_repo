@@ -9,3 +9,9 @@
 - Exécution des migrations
 - créations des fixtures (seeders en laravel)
 - Exécution des fixtures
+
+
+
+principe: 
+- Test STUPID 
+- Test FIRST
