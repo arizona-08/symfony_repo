@@ -1,0 +1,11 @@
+- initialisation du projet
+- création de la base de données
+- création de route dans les controllers
+- création de vues
+- création de template à utliser dans les vues
+- création model (héritage de model au préalble)
+- création de relation entre les model
+- création des migrations (vider la table doctrine_migrations_versions si on veut réinitialiser les migrations et la base de données À FAIRE QU'EN DEVELOPPEMENT)
+- Exécution des migrations
+- créations des fixtures (seeders en laravel)
+- Exécution des fixtures

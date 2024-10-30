@@ -16,6 +16,20 @@ class MediaRepository extends ServiceEntityRepository
         parent::__construct($registry, Media::class);
     }
 
+    /**
+     * Get the desired number of medias
+     *
+     * @return Media[] Returns an array of Media objects
+     */
+    public function findSomeMedias($number): array
+    {
+        return $this->createQueryBuilder('p')
+            ->orderBy('p.id', 'ASC') // Order by the field of your choice (e.g., created date or id)
+            ->setMaxResults($number)
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return Media[] Returns an array of Media objects
 //     */
@@ -30,6 +44,7 @@ class MediaRepository extends ServiceEntityRepository
 //            ->getResult()
 //        ;
 //    }
+
 
 //    public function findOneBySomeField($value): ?Media
 //    {

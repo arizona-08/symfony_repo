@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Repository\CategoryRepository;
+use App\Repository\MediaRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -9,15 +11,10 @@ use Symfony\Component\Routing\Attribute\Route;
 class HomeController extends AbstractController{
 
     #[Route(path: '/', name: "index")]
-    public function index(): Response
+    public function index(MediaRepository $mediaRepository): Response
     {
-        return $this->render("index.html.twig");
-    }
-
-    #[Route(path: '/discover', name: "discover")]
-    public function discover(): Response
-    {
-        return $this->render("movie/discover.html.twig");
+        $medias = $mediaRepository->findAll();
+        return $this->render("index.html.twig", ["medias" => $medias]);
     }
 
     #[Route(path: '/page2', name: "page2")]
