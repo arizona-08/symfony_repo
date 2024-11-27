@@ -23,10 +23,10 @@
         </div>
 
         <div class="relative w-full flex text-gray-700 font-medium">
-            <select class="appearance-none w-full bg-white border border-gray-200 px-7 py-3 rounded-md shadow transition">
+            <select id="playlist-select" class="appearance-none w-full bg-white border border-gray-200 px-7 py-3 rounded-md shadow transition">
 
                 {% for playlist in playlists %}
-                    <option>#{{ loop.index }} - {{ playlist.name }} ({{ playlist.getAllMoviesPlaylistMedia | length }} films & {{ playlist.getAllSeriesPlaylistMedia | length }} séries)</option>
+                    <option value="{{playlist.id}}">#{{ loop.index }} - {{ playlist.name }} ({{ playlist.getAllMoviesPlaylistMedia | length }} films & {{ playlist.getAllSeriesPlaylistMedia | length }} séries)</option>
                 {% endfor %}
             </select>
             <div class="pointer-events-none absolute right-2 inset-y-0 flex items-center px-2">
@@ -64,4 +64,10 @@
         </div>
     </button>
 </section>
+<script>
+    const playlist_select = document.getElementById('playlist-select');
+    playlist_select.addEventListener('change', function() {
+        window.location.href = "{{ path('list', {"id": this.value}) }}";
+    });
+</script>
 {% endblock %}
