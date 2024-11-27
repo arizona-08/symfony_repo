@@ -158,4 +158,30 @@ class Playlist
 
         return $this;
     }
+
+    public function getAllMoviesPlaylistMedia(): Collection {
+        $movies = [];
+
+        foreach($this->playlistMedia as $playlistMedia){
+            $media = $playlistMedia->getMedia();
+            if( $media instanceof Movie){
+                $movies[] = $media;
+            }
+        }
+
+        return new ArrayCollection($movies);
+    }
+
+    public function getAllSeriesPlaylistMedia(): Collection {
+        $series = [];
+
+        foreach($this->playlistMedia as $playlistMedia){
+            $media = $playlistMedia->getMedia();
+            if( $media instanceof Serie){
+                $series[] = $media;
+            }
+        }
+
+        return new ArrayCollection($series);
+    }
 }
