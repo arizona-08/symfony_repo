@@ -60,7 +60,9 @@
 <script>
     const playlist_select = document.getElementById('playlist-select');
     playlist_select.addEventListener('change', function() {
-        window.location.href = "{{ path('list', {'id':" + this.value + "}) }}";
+        const playlist_id = this.value;
+        const url = "{{ path('list', {'id': 'PLACEHOLDER' }) }}".replace("PLACEHOLDER", playlist_id);
+        window.location.href = url;
     });
 </script>
 {% endblock %}
