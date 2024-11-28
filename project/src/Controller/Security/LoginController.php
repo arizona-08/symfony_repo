@@ -28,9 +28,4 @@ class LoginController extends AbstractController{
         //retourne la vue pour le forgot
         return $this->render("auth/forgot.html.twig");
     }
-
-    #[Route(path: '/logout', name: 'logout')]
-    public function logout(): Response {
-        return new Response("logged out");
-    }
 }
