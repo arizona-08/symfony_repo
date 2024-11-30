@@ -309,4 +309,13 @@ class Media
 
         return $this;
     }
+
+    public function getDiscr(): string
+    {
+        $classMap = [
+            Movie::class => 'movie',
+            Serie::class => 'serie',
+        ];
+        return $classMap[get_class($this)] ?? 'unknown';
+    }
 }
