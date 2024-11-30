@@ -11,21 +11,25 @@ class AdminController extends AbstractController{
     //plus besoin d'ajouter '/admin' pour chaque route
     #[Route(path: "/home", name: "admin_homepage")]
     public function homePage(): Response{
-        return $this->render("admin/admin.html.twig");
+        $user = $this->getUser();
+        return $this->render("admin/admin.html.twig", ["logged_user" => $user]);
     }
 
     #[Route(path: "/users", name: "admin_users")]
     public function users(): Response{
-        return $this->render("admin/admin_users.html.twig");
+        $user = $this->getUser();
+        return $this->render("admin/admin_users.html.twig", ["logged_user" => $user]);
     }
 
     #[Route(path: "/films", name: "admin_films")]
     public function films(): Response{
-        return $this->render("admin/admin_films.html.twig");
+        $user = $this->getUser();
+        return $this->render("admin/admin_films.html.twig", ["logged_user" => $user]);
     }
 
     #[Route(path: "/add_films", name: "admin_add_films")]
     public function add_films(): Response{
-        return $this->render("admin/admin_add_films.html.twig");
+        $user = $this->getUser();
+        return $this->render("admin/admin_add_films.html.twig", ["logged_user" => $user]);
     }
 }
