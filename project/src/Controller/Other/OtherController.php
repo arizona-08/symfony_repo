@@ -2,6 +2,7 @@
 
 namespace App\Controller\Other;
 
+use App\Repository\SubscriptionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -10,9 +11,13 @@ use Symfony\Component\Routing\Attribute\Route;
 class OtherController extends AbstractController{
 
     #[Route(path: "/subscribtions", name: "subscribtions")]
-    public function subscriptions(): Response{
+    public function subscriptions(SubscriptionRepository $subscriptionRepository): Response{
         $user = $this->getUser();
-        return $this->render("other/abonnements.html.twig", ["logged_user" => $user]);
+        $subscription_offers = $subscriptionRepository->findAll();
+        return $this->render("other/abonnements.html.twig", [
+            "logged_user" => $user, 
+            "subscription_offers" => $subscription_offers
+        ]);
     }
 
     #[Route(path: '/settings', name: 'settings')]
