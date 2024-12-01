@@ -1,8 +1,11 @@
+
+
 {% extends "base.html.twig" %}
 
 {% block title %}Detail du film{% endblock %}
 
 {% block main_content %}
+
     <section class="">
         <h1 class="text-lg font-medium text-black">Détails de <span class="font-bold text-red-600">{{media.getTitle}}</span></h1>
         <div class="flex flex-col items-center mt-9">
@@ -57,8 +60,9 @@
             <h2 class="text-lg font-medium text-black">Vos <span class="font-bold text-red-600">visionnages </span></h2>
             <div class=" font-medium mt-8 bg-gray-100 border border-black/10 rounded-lg px-8 py-4">
                 <svg class="h-5 w-5 fill-current opacity-50 mr-2 inline-block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>information</title><path d="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" /></svg>
-                Vous avez vu ce film <span class="text-red-600 font-bold">43 fois</span> soit un total de <span class="text-red-600 font-bold">190 heures</span> de visionnage. <a href="" class="hover:text-red-600 underline decoration-red-400 decoration-2">Voir l'historique</a>
+                Vous avez vu ce film <span class="text-red-600 font-bold"> {{ watchHistoryViewsNumber|length }} fois</span> soit un total de <span class="text-red-600 font-bold">190 heures</span> de visionnage. <a href="" class="hover:text-red-600 underline decoration-red-400 decoration-2">Voir l'historique</a>
             </div>
+            
         </div>
     </section>
     <section class="mt-9">

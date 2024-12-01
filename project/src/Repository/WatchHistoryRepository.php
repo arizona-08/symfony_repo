@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\WatchHistory;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Parameter;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -14,6 +15,16 @@ class WatchHistoryRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, WatchHistory::class);
+    }
+
+    public function getWatchHistoryViewsNumber(int $userId, int $mediaId): array{
+        return $this->createQueryBuilder('w')
+            ->andWhere('w.watcher = :userId')
+            ->andWhere('w.media = :mediaId')
+            ->setParameter('userId', $userId)
+            ->setParameter('mediaId', $mediaId)
+            ->getQuery()
+            ->getResult();
     }
 
     //    /**

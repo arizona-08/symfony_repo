@@ -7,6 +7,7 @@ use App\Entity\Media;
 use App\Repository\CategoryRepository;
 use App\Repository\MediaRepository;
 use App\Repository\PlaylistRepository;
+use App\Repository\WatchHistoryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -47,12 +48,18 @@ class MovieController extends AbstractController {
     }
 
     #[Route(path: "/detail_film/{id}", name: "detail_film")]
-    public function detail(Media $media): Response {
+    public function detail(Media $media, WatchHistoryRepository $watchHistoryRepository): Response {
+        //casting the UserInterface $user as a App\Entity\User
 
+        /** @var \App\Entity\User $user */
         $user = $this->getUser();
+        
+        $watchHistoryViewsNumber = $watchHistoryRepository->getWatchHistoryViewsNumber($user->getId(), $media->getId());
+        // dd($watchHistoryViewsNumber);
         return $this->render("movie/detail_film.html.twig", [
             "media" => $media,
             "logged_user" => $user,
+            "watchHistoryViewsNumber" => $watchHistoryViewsNumber,
         ]);
     }
 

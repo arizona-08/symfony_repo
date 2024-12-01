@@ -18,6 +18,7 @@ use App\Entity\Serie;
 use App\Entity\Subscription;
 use App\Entity\SubscriptionHistory;
 use App\Entity\User;
+use App\Entity\WatchHistory;
 use App\Enum\CommentStatusEnum;
 use App\Enum\UserAccountStatusEnum;
 use DateTime;
@@ -66,6 +67,8 @@ class AppFixtures extends Fixture
         $this->createLanguages($manager, $languages);
         $this->createMedia($manager, $medias);
         $this->createComments($manager, $medias, $users);
+
+        $this->createWatchHistory($manager, $users, $medias);
 
         $this->linkMediaToPlaylists($medias, $playlists, $manager);
         $this->linkSubscriptionToUsers($users, $subscriptions, $manager);
@@ -146,6 +149,20 @@ class AppFixtures extends Fixture
             $users[] = $user;
 
             $manager->persist(object: $user);
+        }
+    }
+
+    public function createWatchHistory(ObjectManager $manager, array $users, array $medias): void{
+        foreach($medias as $media){
+            foreach($users as $index => $user){
+                $watchHistory = new WatchHistory();
+                $watchHistory->setMedia($media);
+                $watchHistory->setWatcher($user);
+                $watchHistory->setLastWatchedAt(new DateTimeImmutable());
+                $watchHistory->setNumberOfViews($index);
+
+                $manager->persist($watchHistory);
+            }
         }
     }
 
