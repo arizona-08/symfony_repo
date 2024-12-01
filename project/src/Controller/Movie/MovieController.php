@@ -50,7 +50,10 @@ class MovieController extends AbstractController {
     public function detail(Media $media): Response {
 
         $user = $this->getUser();
-        return $this->render("movie/detail_film.html.twig", ["media" => $media, "logged_user" => $user]);
+        return $this->render("movie/detail_film.html.twig", [
+            "media" => $media,
+            "logged_user" => $user,
+        ]);
     }
 
     #[Route(path: "/detail_serie/{id}", name: "detail_serie")]

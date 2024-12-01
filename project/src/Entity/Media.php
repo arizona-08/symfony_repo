@@ -186,6 +186,15 @@ class Media
         return $this->categories;
     }
 
+    public function getCategoriesToString(): string{
+        $categoriesString = "";
+        foreach($this->getCategories() as $categorie){
+            $categoriesString .= $categorie->getNom() . ", ";
+        }
+        $categoriesString = substr($categoriesString, 0, -2);
+        return $categoriesString;
+    }
+
     public function addCategory(Category $category): static
     {
         if (!$this->categories->contains($category)) {
@@ -208,6 +217,15 @@ class Media
     public function getLanguages(): Collection
     {
         return $this->languages;
+    }
+
+    public function getLanguagesToString(): string{
+        $languagesString = "";
+        foreach($this->getLanguages() as $language){
+            $languagesString .= $language->getNom() . ", ";
+        }
+        $languagesString = substr($languagesString, 0, -2);
+        return $languagesString;
     }
 
     public function addLanguage(Language $language): static
