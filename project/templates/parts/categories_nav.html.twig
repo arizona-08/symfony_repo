@@ -1,0 +1,5 @@
+<nav class="flex space-x-6 text-gray-400 font-medium">
+    {% for catego in categories %}
+        <a href="{{ path('category', {"id": catego.id}) }}" class="{{ catego.label == category.label ? 'text-gray-700 font-semibold' : 'hover:text-gray-700' }}">{{catego.label}}</a>
+    {% endfor %}
+</nav>

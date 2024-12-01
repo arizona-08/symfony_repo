@@ -61,13 +61,15 @@ class MovieController extends AbstractController {
     }
 
     #[Route(path: "/category/{id}", name: "category")]
-    public function category(Category $category, MediaRepository $mediaRepository): Response {
+    public function category(Category $category, CategoryRepository $categoryRepository, MediaRepository $mediaRepository): Response {
 
         $user = $this->getUser();
         $tendancies = $mediaRepository->findSomeMedias(3);
+        $categories = $categoryRepository->findAll();
         return $this->render("movie/category.html.twig", 
         [
-            "category" => $category, 
+            "category" => $category,
+            "categories" => $categories, 
             "tendancies" => $tendancies, 
             "logged_user" => $user
         ]);
