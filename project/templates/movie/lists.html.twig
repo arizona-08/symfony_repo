@@ -24,9 +24,25 @@
 
         <div class="relative w-full flex text-gray-700 font-medium">
             <select id="playlist-select" class="appearance-none w-full bg-white border border-gray-200 px-7 py-3 rounded-md shadow transition">
-
+    
                 {% for playlist in playlists %}
-                    <option value="{{playlist.id}}">#{{ loop.index }} - {{ playlist.name }} ({{ playlist.getAllMoviesPlaylistMedia | length }} films & {{ playlist.getAllSeriesPlaylistMedia | length }} séries)</option>
+                    <option value="{{playlist.id}}" 
+                        {% if request is defined %}
+                            selected="{{request.get('id') == playlist.id ? 'selected' : '' }}"
+                        {% endif %}
+                    >
+                        #{{ loop.index }} - {{ playlist.name }} ({{ playlist.getAllMoviesPlaylistMedia | length }} films & {{ playlist.getAllSeriesPlaylistMedia | length }} séries)
+                    </option>
+                {% endfor %}
+
+                {% for subscribed_playlist in subscribed_playlists %}
+                    <option value="{{subscribed_playlist.getPlaylist.id}}"
+                        {% if request is defined %}
+                            selected="{{request.get('id') == subscribed_playlist.getPlaylist.id ? 'selected' : '' }}"
+                        {% endif %}
+                    >
+                        sub #{{ loop.index }} - {{ subscribed_playlist.getPlaylist.name }} ({{ subscribed_playlist.getPlaylist.getAllMoviesPlaylistMedia | length }} films & {{ subscribed_playlist.playlist.getAllSeriesPlaylistMedia | length }} séries) - Par {{ subscribed_playlist.playlist.getCreator.getUsername }}
+                    </option>
                 {% endfor %}
             </select>
             <div class="pointer-events-none absolute right-2 inset-y-0 flex items-center px-2">
@@ -38,7 +54,7 @@
 
 <section class="mt-9">
     <ul class="grid grid-cols-2 gap-y-5 sm:grid-cols-3 gap-x-5">
-        {% if selectedPlaylist is defined%}
+        {% if selectedPlaylist is defined %}
             {% for playlistMedia in selectedPlaylist.getPlaylistMedia %}
                 {% include "parts/playlist-movie-card.html.twig" %}
             {% endfor %}

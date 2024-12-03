@@ -6,7 +6,9 @@ use App\Entity\Category;
 use App\Entity\Media;
 use App\Repository\CategoryRepository;
 use App\Repository\MediaRepository;
+use App\Repository\PlaylistMediaRepository;
 use App\Repository\PlaylistRepository;
+use App\Repository\PlaylistSubscriptionRepository;
 use App\Repository\WatchHistoryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,24 +27,36 @@ class MovieController extends AbstractController {
     }
 
     #[Route(path: "/lists", name: "lists")]
-    public function lists(PlaylistRepository $playlistRepository): Response {
+    public function lists(PlaylistRepository $playlistRepository, PlaylistSubscriptionRepository $playlistSubscriptionRepository): Response {
 
+        /** @var \App\Entity\User $user */
         $user = $this->getUser();
-        $playlists = $playlistRepository->findAll();
-        return $this->render("movie/lists.html.twig", ["playlists" => $playlists, "logged_user" => $user]);
+
+        $playlists = $playlistRepository->findMyPlaylists($user);
+        $subscribed_playlists = $playlistSubscriptionRepository->findBySubscriber($user);
+        return $this->render("movie/lists.html.twig", [
+            "playlists" => $playlists, 
+            "subscribed_playlists" => $subscribed_playlists,
+            "logged_user" => $user
+        ]);
     }
 
     #[Route(path: "/list/{id}", name: "list")]
-    public function showLists(PlaylistRepository $playlistRepository, int $id): Response {
+    public function showLists(Request $request, PlaylistSubscriptionRepository $playlistSubscriptionRepository, PlaylistRepository $playlistRepository, int $id): Response {
 
+        /** @var \App\Entity\User $user */
         $user = $this->getUser();
-        $playlists = $playlistRepository->findAll();
+
+        $playlists = $playlistRepository->findMyPlaylists($user);
+        $subscribed_playlists = $playlistSubscriptionRepository->findBySubscriber($user);
 
         $selectedPlaylist = $playlistRepository->find($id);
-        // dd($selectedPlaylist->getPlaylistMedia()[0]->getMedia()->getCoverImage());
+
         return $this->render("movie/lists.html.twig", [
             "playlists" => $playlists, 
+            "subscribed_playlists" => $subscribed_playlists,
             "selectedPlaylist" => $selectedPlaylist,
+            "request" => $request,
             "logged_user" => $user
         ]);
     }

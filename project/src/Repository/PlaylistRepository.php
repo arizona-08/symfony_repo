@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Playlist;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -16,20 +17,19 @@ class PlaylistRepository extends ServiceEntityRepository
         parent::__construct($registry, Playlist::class);
     }
 
-    //    /**
-    //     * @return Playlist[] Returns an array of Playlist objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('p.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+       /**
+        * @return Playlist[] Returns an array of Playlist objects
+        */
+       public function findMyPlaylists(User $creator): array
+       {
+           return $this->createQueryBuilder('p')
+               ->andWhere('p.creator = :val')
+               ->setParameter('val', $creator)
+               ->orderBy('p.id', 'ASC')
+               ->getQuery()
+               ->getResult()
+           ;
+       }
 
     //    public function findOneBySomeField($value): ?Playlist
     //    {
