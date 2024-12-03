@@ -28,7 +28,7 @@
                 {% for playlist in playlists %}
                     <option value="{{playlist.id}}" 
                         {% if request is defined %}
-                            selected="{{request.get('id') == playlist.id ? 'selected' : '' }}"
+                            {{request.get('id') == playlist.id ? 'selected' : '' }}
                         {% endif %}
                     >
                         #{{ loop.index }} - {{ playlist.name }} ({{ playlist.getAllMoviesPlaylistMedia | length }} films & {{ playlist.getAllSeriesPlaylistMedia | length }} séries)
@@ -38,7 +38,7 @@
                 {% for subscribed_playlist in subscribed_playlists %}
                     <option value="{{subscribed_playlist.getPlaylist.id}}"
                         {% if request is defined %}
-                            selected="{{request.get('id') == subscribed_playlist.getPlaylist.id ? 'selected' : '' }}"
+                            {{request.get('id') == subscribed_playlist.getPlaylist.id ? 'selected' : '' }}
                         {% endif %}
                     >
                         sub #{{ loop.index }} - {{ subscribed_playlist.getPlaylist.name }} ({{ subscribed_playlist.getPlaylist.getAllMoviesPlaylistMedia | length }} films & {{ subscribed_playlist.playlist.getAllSeriesPlaylistMedia | length }} séries) - Par {{ subscribed_playlist.playlist.getCreator.getUsername }}
