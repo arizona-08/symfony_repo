@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20241128172914 extends AbstractMigration
+final class Version20241214134852 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -19,12 +19,15 @@ final class Version20241128172914 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
-        $this->addSql('ALTER TABLE "user" ADD roles JSON NOT NULL');
+        // this up() migration is auto-generated, please modify it to your needs
+        $this->addSql('ALTER TABLE "user" ADD reset_token UUID DEFAULT NULL');
+        $this->addSql('COMMENT ON COLUMN "user".reset_token IS \'(DC2Type:uuid)\'');
     }
 
     public function down(Schema $schema): void
     {
+        // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE SCHEMA public');
-        $this->addSql('ALTER TABLE "user" DROP roles');
+        $this->addSql('ALTER TABLE "user" DROP reset_token');
     }
 }

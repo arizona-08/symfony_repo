@@ -1,0 +1,22 @@
+{% extends "index.html.twig" %}
+
+{% block title %} Réinitialiser mon mot de passe {% endblock %}
+
+{% block main_content %}
+    <section>
+        <form action="" method="POST">
+            <div>
+                <label for="password">Mot de passe</label>
+                <input id="password" type="password" name="_password">
+            </div>
+
+            <div>
+                <label for="password">Confirmation du mot de passe</label>
+                <input id="confirm" type="password" name="_confirm">
+            </div>
+
+            <button type="submit">Confirmer</button>
+            
+        </form>
+    </section>
+{% endblock %}

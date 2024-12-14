@@ -42,11 +42,11 @@ security:
         
     access_control:
         # - { path: ^/, roles: [ROLE_USER, ROLE_BANNED] }
-        - { path: ^/admin, roles: ROLE_ADMIN }
-        - { path: ^/profile, roles: ROLE_USER }
-        - { path: ^/movie, roles: ROLE_USER }
-        - { path: ^/other, roles: ROLE_USER }
-        - { path: ^/logout, roles: ROLE_USER }
+        # - { path: ^/admin, roles: ROLE_ADMIN }
+        # - { path: ^/profile, roles: ROLE_USER }
+        # - { path: ^/movie, roles: ROLE_USER }
+        # - { path: ^/other, roles: ROLE_USER }
+        # - { path: ^/logout, roles: ROLE_USER }
 
 when@test:
     security:

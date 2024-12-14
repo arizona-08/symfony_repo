@@ -17,10 +17,4 @@ class HomeController extends AbstractController{
         $medias = $mediaRepository->findAll();
         return $this->render("index.html.twig", ["medias" => $medias, "logged_user" => $user]);
     }
-
-    #[Route(path: '/page2', name: "page2")]
-    public function page2(): Response
-    {
-        return new Response("Coucou");
-    }
 }
